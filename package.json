@@ -11,12 +11,14 @@
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "prettier": "^3.2.5",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "turbo": "^2.3.0",
     "typescript": "5.5.4"
   },
   "packageManager": "pnpm@9.12.3",
   "engines": {
     "node": ">=20"
-  }
+  },
+  "type": "module"
 }
