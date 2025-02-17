@@ -49,17 +49,17 @@ importers:
         version: 19.0.0(react@19.0.0)
       swagger-ui-react:
         specifier: ^5.18.3
-        version: 5.18.3(@types/react@19.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 5.18.3(@types/react@18.3.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
     devDependencies:
       '@types/node':
         specifier: ^20
         version: 20.17.10
       '@types/react':
-        specifier: ^19
-        version: 19.0.9
+        specifier: 18.3.0
+        version: 18.3.0
       '@types/react-dom':
-        specifier: ^19
-        version: 19.0.3(@types/react@19.0.9)
+        specifier: 18.3.1
+        version: 18.3.1
       '@types/swagger-ui-react':
         specifier: ^5.18.0
         version: 5.18.0
@@ -788,16 +788,8 @@ packages:
   '@types/react-dom@18.3.1':
     resolution: {integrity: sha512-qW1Mfv8taImTthu4KoXgDfLuk4bydU6Q/TkADnDWWHwi4NX4BR+LWfTp2sVmTqRrsHvyDDTelgelxJ+SsejKKQ==}
 
-  '@types/react-dom@19.0.3':
-    resolution: {integrity: sha512-0Knk+HJiMP/qOZgMyNFamlIjw9OFCsyC2ZbigmEEyXXixgre6IQpm/4V+r3qH4GC1JPvRJKInw+on2rV6YZLeA==}
-    peerDependencies:
-      '@types/react': ^19.0.0
-
   '@types/react@18.3.0':
     resolution: {integrity: sha512-DiUcKjzE6soLyln8NNZmyhcQjVv+WsUIFSqetMN0p8927OztKT4VTfFTqsbAi5oAGIcgOmOajlfBqyptDDjZRw==}
-
-  '@types/react@19.0.9':
-    resolution: {integrity: sha512-FedNTYgmMwSZmD1Sru/W1gJKuiYCN/3SuBkmZkcxX+FpO5zL76B22A9YNfAKg4HQO3Neh/30AiynP6BELdU0qQ==}
 
   '@types/swagger-jsdoc@6.0.4':
     resolution: {integrity: sha512-W+Xw5epcOZrF/AooUM/PccNMSAFOKWZA5dasNyMujTwsBkU74njSJBpvCCJhHAJ95XRMzQrrW844Btu0uoetwQ==}
@@ -4303,26 +4295,18 @@ snapshots:
 
   '@types/react-dom@18.3.1':
     dependencies:
-      '@types/react': 19.0.9
-
-  '@types/react-dom@19.0.3(@types/react@19.0.9)':
-    dependencies:
-      '@types/react': 19.0.9
+      '@types/react': 18.3.0
 
   '@types/react@18.3.0':
     dependencies:
       '@types/prop-types': 15.7.14
       csstype: 3.1.3
 
-  '@types/react@19.0.9':
-    dependencies:
-      csstype: 3.1.3
-
   '@types/swagger-jsdoc@6.0.4': {}
 
   '@types/swagger-ui-react@5.18.0':
     dependencies:
-      '@types/react': 19.0.9
+      '@types/react': 18.3.0
 
   '@types/through@0.0.33':
     dependencies:
@@ -6537,13 +6521,13 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-redux@9.2.0(@types/react@19.0.9)(react@19.0.0)(redux@5.0.1):
+  react-redux@9.2.0(@types/react@18.3.0)(react@19.0.0)(redux@5.0.1):
     dependencies:
       '@types/use-sync-external-store': 0.0.6
       react: 19.0.0
       use-sync-external-store: 1.4.0(react@19.0.0)
     optionalDependencies:
-      '@types/react': 19.0.9
+      '@types/react': 18.3.0
       redux: 5.0.1
 
   react-syntax-highlighter@15.6.1(react@19.0.0):
@@ -6997,7 +6981,7 @@ snapshots:
     transitivePeerDependencies:
       - openapi-types
 
-  swagger-ui-react@5.18.3(@types/react@19.0.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  swagger-ui-react@5.18.3(@types/react@18.3.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       '@babel/runtime-corejs3': 7.26.0
       '@braintree/sanitize-url': 7.0.4
@@ -7022,7 +7006,7 @@ snapshots:
       react-immutable-proptypes: 2.2.0(immutable@3.8.2)
       react-immutable-pure-component: 2.2.2(immutable@3.8.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-inspector: 6.0.2(react@19.0.0)
-      react-redux: 9.2.0(@types/react@19.0.9)(react@19.0.0)(redux@5.0.1)
+      react-redux: 9.2.0(@types/react@18.3.0)(react@19.0.0)(redux@5.0.1)
       react-syntax-highlighter: 15.6.1(react@19.0.0)
       redux: 5.0.1
       redux-immutable: 4.0.0(immutable@3.8.2)
