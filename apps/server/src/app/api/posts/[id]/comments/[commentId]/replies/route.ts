@@ -5,13 +5,13 @@ import { readData, writeData } from '@/utils';
 
 /**
  * @swagger
- * /posts/{id}/comments/{commentId}/replies:
+ * /posts/{postId}/comments/{commentId}/replies:
  *   get:
  *     tags: ['Replies']
  *     summary: 특정 댓글의 대댓글 목록 조회 (커서 기반 페이지네이션)
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: postId
  *         required: true
  *         schema:
  *           type: string
@@ -42,6 +42,16 @@ import { readData, writeData } from '@/utils';
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/CommentCursorPaginationResponse'
+ *       404:
+ *         description: 게시글이나 댓글을 찾을 수 없음
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Post or comment not found"
  */
 export async function GET(
   request: NextRequest,
@@ -55,6 +65,20 @@ export async function GET(
     const limit = Number(searchParams.get('limit')) || 10;
 
     const data = await readData();
+
+    // 게시글 존재 확인
+    const postExists = data.posts.some((post) => post.id === id);
+    if (!postExists) {
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+    }
+
+    // 부모 댓글 존재 확인
+    const commentExists = data.comments.some(
+      (comment) => comment.id === commentId
+    );
+    if (!commentExists) {
+      return NextResponse.json({ error: 'Comment not found' }, { status: 404 });
+    }
 
     // 대댓글 필터링
     const replies = data.comments.filter(
@@ -88,15 +112,16 @@ export async function GET(
     );
   }
 }
+
 /**
  * @swagger
- * /posts/{id}/comments/{commentId}/replies:
+ * /posts/{postId}/comments/{commentId}/replies:
  *   post:
  *     tags: ['Replies']
  *     summary: 대댓글 작성
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: postId
  *         required: true
  *         schema:
  *           type: string
@@ -120,6 +145,16 @@ export async function GET(
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Comment'
+ *       404:
+ *         description: 게시글이나 댓글을 찾을 수 없음
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Post or comment not found"
  */
 export async function POST(
   request: NextRequest,
@@ -129,6 +164,12 @@ export async function POST(
     const { id, commentId } = await params;
     const body: CreateCommentDTO = await request.json();
     const data = await readData();
+
+    // 게시글 존재 확인
+    const postExists = data.posts.find((post) => post.id === id);
+    if (!postExists) {
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+    }
 
     // 부모 댓글이 존재하는지 확인
     const parentComment = data.comments.find(

@@ -10,7 +10,15 @@
 1. **프로젝트 루트 경로**에서 아래 명령어를 실행하여 디렉토리와 파일을 생성합니다.
 
 ```bash
+# Windows (cmd)
+mkdir apps\server\src\data
+type nul > apps\server\src\data\db.json
 
+# Windows (PowerShell)
+New-Item -ItemType Directory -Path "apps\server\src\data" -Force
+New-Item -ItemType File -Path "apps\server\src\data\db.json" -Force
+
+# Linux/Mac (Bash)
 mkdir apps/server/src/data && touch apps/server/src/data/db.json
 ```
 
@@ -394,6 +402,8 @@ mkdir apps/server/src/data && touch apps/server/src/data/db.json
 ## 서버 실행
 
 ```bash
+pnpm install
+
 //dev
 pnpm dev
 
