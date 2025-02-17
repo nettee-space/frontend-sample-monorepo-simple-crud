@@ -5,13 +5,13 @@ import { readData, writeData } from '@/utils';
 
 /**
  * @swagger
- * /posts/{id}:
+ * /posts/{postId}:
  *   get:
  *     tags: ['Posts']
  *     summary: 특정 게시글 조회
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: postId
  *         required: true
  *         schema:
  *           type: string
@@ -67,13 +67,13 @@ export async function GET(
 
 /**
  * @swagger
- * /posts/{id}:
+ * /posts/{postId}:
  *   put:
  *     tags: ['Posts']
  *     summary: 게시글 수정
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: postId
  *         required: true
  *         schema:
  *           type: string
@@ -150,14 +150,14 @@ export async function PUT(
 
 /**
  * @swagger
- * /posts/{id}:
+ * /posts/{postId}:
  *   delete:
  *     tags: ['Posts']
  *     summary: 게시글 삭제
  *     description: 게시글과 관련된 모든 댓글이 함께 삭제됩니다
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: postId
  *         required: true
  *         schema:
  *           type: string

@@ -5,13 +5,13 @@ import { getReplyCount, readData, writeData } from '@/utils';
 
 /**
  * @swagger
- * /posts/{id}/comments:
+ * /posts/{postId}/comments:
  *   get:
  *     tags: ['Comments']
  *     summary: 게시글의 댓글 목록 조회 (오프셋 페이지네이션)
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: postId
  *         required: true
  *         schema:
  *           type: string
@@ -115,13 +115,13 @@ export async function GET(
 
 /**
  * @swagger
- * /posts/{id}/comments:
+ * /posts/{postId}/comments:
  *   post:
  *     tags: ['Comments']
  *     summary: 새 댓글 작성
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: postId
  *         required: true
  *         schema:
  *           type: string

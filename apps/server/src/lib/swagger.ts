@@ -59,6 +59,7 @@ export const getApiDocs = async () => {
                 type: 'string',
                 format: 'date-time',
                 description: '수정 시간',
+                nullable: true,
               },
             },
           },
@@ -124,6 +125,7 @@ export const getApiDocs = async () => {
           },
           UpdatePostDTO: {
             type: 'object',
+            required: ['title', 'content', 'author'],
             properties: {
               title: {
                 type: 'string',
@@ -155,6 +157,7 @@ export const getApiDocs = async () => {
           },
           UpdateCommentDTO: {
             type: 'object',
+            required: ['content', 'author'],
             properties: {
               content: {
                 type: 'string',
@@ -178,14 +181,11 @@ export const getApiDocs = async () => {
                 type: 'string',
                 description: '작성자',
               },
-              parentCommentId: {
-                type: 'string',
-                description: '부모 댓글 ID',
-              },
             },
           },
           UpdateReplyDTO: {
             type: 'object',
+            required: ['content', 'author'],
             properties: {
               content: {
                 type: 'string',

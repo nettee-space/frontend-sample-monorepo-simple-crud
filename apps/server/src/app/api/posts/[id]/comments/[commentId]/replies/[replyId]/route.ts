@@ -5,13 +5,13 @@ import { readData, writeData } from '@/utils';
 
 /**
  * @swagger
- * /posts/{id}/comments/{commentId}/replies/{replyId}:
+ * /posts/{postId}/comments/{commentId}/replies/{replyId}:
  *   put:
  *     tags: ['Replies']
  *     summary: 대댓글 수정
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: postId
  *         required: true
  *         schema:
  *           type: string
@@ -128,13 +128,13 @@ export async function PUT(
 
 /**
  * @swagger
- * /posts/{id}/comments/{commentId}/replies/{replyId}:
+ * /posts/{postId}/comments/{commentId}/replies/{replyId}:
  *   delete:
  *     tags: ['Replies']
  *     summary: 대댓글 삭제
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: postId
  *         required: true
  *         schema:
  *           type: string
