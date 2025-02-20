@@ -1,0 +1,108 @@
+name: Update Status Labels on PR Merge
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  update_status_labels:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Check Repository Labels
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              await github.rest.issues.getLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: 'status:done'
+              });
+            } catch (error) {
+              if (error.status === 404) {
+                console.error(`'status:done' 라벨이 저장소에 존재하지 않습니다.`);
+                return;
+              }
+              console.error('라벨 확인 중 오류:', error);
+            }
+
+      - name: Update PR and Issue Labels
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            async function updateStatusLabels(issueNumber, currentLabels) {
+              const statusLabels = currentLabels.filter(label => label.name.startsWith('status:'));
+              
+              // status:done이 아닌 status: 라벨 제거
+              await Promise.all(statusLabels
+                .filter(label => label.name !== 'status:done')
+                .map(label => github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  name: label.name
+                }).catch(error => {
+                  if (error.status !== 404) console.error(`라벨 ${label.name} 제거 중 오류:`, error);
+                }))
+              );
+
+              // status:done 라벨 추가
+              if (!statusLabels.some(label => label.name === 'status:done')) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  labels: ['status:done']
+                });
+              }
+
+              const { data: finalLabels } = await github.rest.issues.listLabelsOnIssue({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber
+              });
+              return finalLabels.map(label => label.name);
+            }
+
+            try {
+              // PR 라벨 업데이트
+              const prNumber = context.payload.pull_request.number;
+              const prFinalLabels = await updateStatusLabels(prNumber, context.payload.pull_request.labels);
+              console.log(`PR #${prNumber} 최종 라벨:`, prFinalLabels);
+
+              // 연결된 이슈 찾기
+              const prBody = context.payload.pull_request.body;
+              if (!prBody) return;
+
+              const issueRegex = /(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/gi;
+              const uniqueIssueNumbers = new Set([...prBody.matchAll(issueRegex)].map(match => match[2]));
+              
+              if (uniqueIssueNumbers.size === 0) return;
+
+              // 이슈 라벨 업데이트
+              await Promise.all(Array.from(uniqueIssueNumbers).map(async issueNumber => {
+                try {
+                  const { data: issue } = await github.rest.issues.get({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issueNumber
+                  });
+
+                  const finalLabels = await updateStatusLabels(issueNumber, issue.labels);
+                  console.log(`이슈 #${issueNumber} 최종 라벨:`, finalLabels);
+                } catch (error) {
+                  if (error.status !== 404) {
+                    console.error(`이슈 #${issueNumber} 처리 중 오류:`, error);
+                  }
+                }
+              }));
+            } catch (error) {
+              console.error('라벨 업데이트 중 오류:', error);
+            }
