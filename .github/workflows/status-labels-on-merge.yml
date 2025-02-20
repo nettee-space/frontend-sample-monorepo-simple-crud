@@ -21,11 +21,11 @@ jobs:
               await github.rest.issues.getLabel({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                name: 'status:done'
+                name: 'status: done'
               });
             } catch (error) {
               if (error.status === 404) {
-                console.error(`'status:done' 라벨이 저장소에 존재하지 않습니다.`);
+                console.error(`'status: done' 라벨이 저장소에 존재하지 않습니다.`);
                 return;
               }
               console.error('라벨 확인 중 오류:', error);
@@ -42,7 +42,7 @@ jobs:
               
               // status:done이 아닌 status: 라벨 제거
               await Promise.all(statusLabels
-                .filter(label => label.name !== 'status:done')
+                .filter(label => label.name !== 'status: done')
                 .map(label => github.rest.issues.removeLabel({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
@@ -54,12 +54,12 @@ jobs:
               );
 
               // status:done 라벨 추가
-              if (!statusLabels.some(label => label.name === 'status:done')) {
+              if (!statusLabels.some(label => label.name === 'status: done')) {
                 await github.rest.issues.addLabels({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: issueNumber,
-                  labels: ['status:done']
+                  labels: ['status: done']
                 });
               }
 
