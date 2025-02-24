@@ -1,15 +1,26 @@
-export default function Page() {
+import Link from 'next/link';
+
+import { getInfiniteScrollData } from '@/features/post/post-list/api/post-infinite-scroll';
+import { InfiniteScroll } from '@/features/post/post-list/ui/infinite-scroll';
+import { Button } from '@/shared/ui/button';
+
+export default async function Home() {
+  const { data, nextCursor, hasMore } = await getInfiniteScrollData('', 10);
+
   return (
-    <div className="min-h-svh flex items-center justify-center">
-      <div className="flex flex-col items-center justify-center gap-4">
-        <h1 className="flex flex-col justify-center text-2xl font-bold">
-          Hello World
-        </h1>
-        {/* <Button size="sm">Button</Button> */}
-        <div className="flex items-center bg-blue-500 p-4 hover:bg-blue-700">
-          Test
-        </div>
-      </div>
-    </div>
+    <>
+      <Button
+        divClassName="text-right mr-8"
+        buttonClassName="bg-black text-white font-semibold text-base p-2 rounded"
+      >
+        <Link href="/posts/write">새 글 작성</Link>
+      </Button>
+
+      <InfiniteScroll
+        postList={data}
+        lastPostId={nextCursor}
+        hasMore={hasMore}
+      />
+    </>
   );
 }
