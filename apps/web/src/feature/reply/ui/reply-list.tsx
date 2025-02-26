@@ -4,6 +4,8 @@ import { useCallback, useEffect, useState } from 'react';
 import type { CommentType } from '@/src/feature/comment/types/comment-type';
 import { Comment } from '@/src/feature/comment/ui/comment';
 import { getReply } from '@/src/feature/reply/api/reply-api';
+import { useInfiniteScroll } from '@/src/shared/ui/useInfiniteScroll';
+
 export function ReplyList() {
   const [data, setData] = useState<CommentType[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -31,15 +33,20 @@ export function ReplyList() {
       setIsLoading(false);
     }
   }, [nextCursor, hasMore, isLoading]);
+
   useEffect(() => {
     fetchReplies();
-  }, [fetchReplies]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const { targetRef } = useInfiniteScroll(fetchReplies);
 
   return (
     <div>
       {data.map(({ id, author, content }) => (
         <Comment key={id} author={author} content={content} />
       ))}
+      <div ref={targetRef} />
     </div>
   );
 }
