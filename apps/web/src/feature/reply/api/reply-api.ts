@@ -28,7 +28,7 @@ export const createReply = async (
 ): Promise<void> => {
   return fetchWrapper.post(
     `/posts/${postId}/comments/${commentId}/replies`,
-    JSON.stringify(content)
+    content
   );
 };
 
@@ -50,6 +50,6 @@ export const updateReply = async (
 ): Promise<void> => {
   return fetchWrapper.put(
     `/posts/${postId}/comments/${commentId}/replies/${replyId}`,
-    JSON.stringify(content)
+    content
   );
 };

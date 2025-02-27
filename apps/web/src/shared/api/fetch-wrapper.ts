@@ -5,14 +5,16 @@ export const fetchWrapper = {
   delete: _delete,
 };
 const BASE_URL = 'http://localhost:4000/api';
-function get(url: string) {
+
+async function get(url: string) {
   const requestOptions = {
     method: 'GET',
   };
+
   return fetch(`${BASE_URL}/${url}`, requestOptions).then(handleResponse);
 }
 
-async function post(url: string, body: []) {
+async function post<T>(url: string, body: T) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -21,7 +23,7 @@ async function post(url: string, body: []) {
   return fetch(`${BASE_URL}/${url}`, requestOptions).then(handleResponse);
 }
 
-function put(url: string, body: []) {
+function put<T>(url: string, body: T) {
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -30,7 +32,6 @@ function put(url: string, body: []) {
   return fetch(`${BASE_URL}/${url}`, requestOptions).then(handleResponse);
 }
 
-// prefixed with underscored because delete is a reserved word in javascript
 function _delete(url: string) {
   const requestOptions = {
     method: 'DELETE',
