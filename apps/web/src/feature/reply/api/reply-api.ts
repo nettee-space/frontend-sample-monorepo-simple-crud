@@ -4,7 +4,7 @@ import {
   CreateReplyDTO,
   ReplyCursorPaginationResponse,
   UpdateReplyDTO,
-} from '../types/reply-type';
+} from '../types/Reply';
 
 export const getReply = async (
   postId: string,

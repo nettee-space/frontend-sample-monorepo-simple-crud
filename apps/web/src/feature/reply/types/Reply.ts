@@ -18,6 +18,5 @@ export interface ReplyType {
   author: string;
   createdAt: string;
   updatedAt: string;
-  parentCommentId: string; // default : true
-  ReplyCount: number; // default : true
+  parentCommentId: string;
 }
