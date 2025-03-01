@@ -5,6 +5,5 @@ export interface CommentType {
   author: string;
   createdAt: string;
   updatedAt: string;
-  parentCommentId: string; // default : true
-  ReplyCount: number; // default : true
+  ReplyCount: number;
 }

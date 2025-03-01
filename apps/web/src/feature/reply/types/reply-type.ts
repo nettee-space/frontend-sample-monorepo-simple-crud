@@ -1,5 +1,3 @@
-import { CommentType } from '@/src/feature/comment/types/comment-type';
-
 export interface CreateReplyDTO {
   content: string;
   author: string;
@@ -9,7 +7,17 @@ export interface UpdateReplyDTO {
   author: string;
 }
 export interface ReplyCursorPaginationResponse {
-  data: CommentType[];
+  data: ReplyType[];
   nextCursor: string; // default : true
   hasMore: boolean;
+}
+export interface ReplyType {
+  id: string;
+  postId: string;
+  content: string;
+  author: string;
+  createdAt: string;
+  updatedAt: string;
+  parentCommentId: string; // default : true
+  ReplyCount: number; // default : true
 }
