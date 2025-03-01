@@ -1,12 +1,12 @@
 'use clients';
 import { useCallback, useState } from 'react';
 
-import type { CommentType } from '@/src/feature/comment/types/comment-type';
 import { getReply } from '@/src/feature/reply/api/reply-api';
-import { useInfiniteScroll } from '@/src/shared/ui/useInfiniteScroll';
+import type { ReplyType } from '@/src/feature/reply/types/reply-type';
+import { useInfiniteScroll } from '@/src/shared/lib/useInfiniteScroll';
 
 export function useReplyFetch() {
-  const [data, setData] = useState<CommentType[]>([]);
+  const [data, setData] = useState<ReplyType[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [nextCursor, setNextCursor] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,13 +26,13 @@ export function useReplyFetch() {
       setHasMore(response.hasMore);
       setNextCursor(response.nextCursor);
     } catch (error) {
-      console.error('뭐가 문젠지 봐봐', error);
+      throw new Error(error as string);
     } finally {
       setIsLoading(false);
     }
   }, [nextCursor, hasMore, isLoading]);
 
-  const { targetRef } = useInfiniteScroll(fetchReplies);
+  const { targetRef } = useInfiniteScroll(fetchReplies, { threshold: 1 });
 
-  return { data, targetRef };
+  return { data, targetRef, isLoading };
 }

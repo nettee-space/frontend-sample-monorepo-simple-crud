@@ -6,8 +6,8 @@ type State = {
 };
 
 export async function replyAdd(prevState: State, queryData: FormData) {
-  // const postId = queryData.get("postId") as string;
-  // const commentId = queryData.get("commentId") as string;
+  const postId = queryData.get('postId') as string;
+  const commentId = queryData.get('commentId') as string;
   const content = queryData.get('content') as string;
   // const author = queryData.get("author") as string;
   const author = 'guest';
@@ -15,6 +15,6 @@ export async function replyAdd(prevState: State, queryData: FormData) {
     return { message: '모든 빈 칸을 입력해주세요' };
   }
 
-  await createReply('17358013402371', '1738039148628', { content, author });
+  await createReply(postId, commentId, { content, author });
   return { message: '댓글 작성 완료' };
 }

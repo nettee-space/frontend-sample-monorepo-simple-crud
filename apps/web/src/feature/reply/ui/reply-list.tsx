@@ -3,13 +3,19 @@ import { Comment } from '@/src/feature/comment/ui/comment';
 import { useReplyFetch } from '@/src/feature/reply/api/reply-fetch';
 
 export function ReplyList() {
-  const { data, targetRef } = useReplyFetch();
+  const { data, targetRef, isLoading } = useReplyFetch();
   return (
     <div>
-      {data.map(({ id, author, content }) => (
-        <Comment key={id} author={author} content={content} />
+      {data.map(({ id, author, content, createdAt, updatedAt }) => (
+        <Comment
+          key={id}
+          author={author}
+          content={content}
+          createdAt={createdAt}
+          updatedAt={updatedAt}
+        />
       ))}
-      <div ref={targetRef} />
+      {isLoading ? <p>Loading...</p> : <div ref={targetRef} />}
     </div>
   );
 }
