@@ -1,18 +1,20 @@
+import { Button } from '@workspace/ui/components/button';
 import Image from 'next/image';
 
 import { profile } from '@/src/shared/assets';
 import { formatTimeAgo } from '@/src/shared/lib';
-
 export function Comment({
   author,
   content,
   createdAt,
   updatedAt,
+  onEdit,
 }: {
   author: string;
   content: string;
   createdAt: string;
   updatedAt: string;
+  onEdit: () => void;
 }) {
   return (
     <div className="flex space-x-4 py-[100px]">
@@ -28,8 +30,7 @@ export function Comment({
         </div>
         <p className="text-gray-700">{content}</p>
         <div className="flex space-x-2">
-          {/* <OutLineButton text={'수정'} action={}/> */}
-          {/* <OutLineButton text={'삭제'} action={}/> */}
+          <Button onClick={onEdit}>수정</Button>
         </div>
       </div>
     </div>
