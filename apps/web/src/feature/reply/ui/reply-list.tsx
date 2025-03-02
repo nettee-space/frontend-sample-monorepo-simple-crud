@@ -14,14 +14,17 @@ export function ReplyList() {
   );
   return (
     <div>
-      {data.map(({ id, author, content, createdAt, updatedAt }) => (
-        <Comment
-          key={id}
-          author={author}
-          content={content}
-          createdAt={createdAt}
-          updatedAt={updatedAt}
-        />
+      {data.map(({ id, author, content, createdAt, updatedAt }, index) => (
+        <>
+          <Comment
+            key={id}
+            author={author}
+            content={content}
+            createdAt={createdAt}
+            updatedAt={updatedAt}
+          />
+          {index === data.length - 1 && <div ref={targetRef} />}
+        </>
       ))}
       {isLoading ? <p>Loading...</p> : <div ref={targetRef} />}
     </div>
