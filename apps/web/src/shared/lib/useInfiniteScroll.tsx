@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export function useInfiniteScroll<T extends HTMLDivElement>(
+export function useInfiniteScroll<T extends HTMLElement>(
   fetchData: () => Promise<void>,
   {
     threshold,
@@ -8,7 +8,7 @@ export function useInfiniteScroll<T extends HTMLDivElement>(
     rootMargin,
   }: { threshold: number; root?: Element | Document; rootMargin?: string }
 ) {
-  const targetRef = useRef<T | null>(null);
+  const targetRef = useRef<T | null>(null) as React.RefObject<T>;
 
   useEffect(() => {
     if (!targetRef.current) return;
