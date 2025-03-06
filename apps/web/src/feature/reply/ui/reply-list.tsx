@@ -23,7 +23,7 @@ export function ReplyList() {
             createdAt={createdAt}
             updatedAt={updatedAt}
           />
-          {index === data.length - 1 && <span ref={targetRef} />}
+          {index === data.length - 1 && <div ref={targetRef} />}
         </>
       ))}
       {isLoading ? <p>Loading...</p> : <span ref={targetRef} />}
