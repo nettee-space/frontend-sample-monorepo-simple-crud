@@ -6,7 +6,7 @@ export const fetchWrapper = {
 };
 const BASE_URL = 'http://localhost:4000/api';
 
-async function get(url: string) {
+async function get<T>(url: string): Promise<T> {
   const requestOptions = {
     method: 'GET',
   };
@@ -14,7 +14,7 @@ async function get(url: string) {
   return fetch(`${BASE_URL}/${url}`, requestOptions).then(handleResponse);
 }
 
-async function post<T>(url: string, body: T) {
+async function post<T extends object>(url: string, body: T): Promise<T> {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -23,7 +23,7 @@ async function post<T>(url: string, body: T) {
   return fetch(`${BASE_URL}/${url}`, requestOptions).then(handleResponse);
 }
 
-function put<T>(url: string, body: T) {
+function put<T extends object>(url: string, body: T): Promise<T> {
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -32,7 +32,7 @@ function put<T>(url: string, body: T) {
   return fetch(`${BASE_URL}/${url}`, requestOptions).then(handleResponse);
 }
 
-function _delete(url: string) {
+function _delete<T>(url: string): Promise<T> {
   const requestOptions = {
     method: 'DELETE',
   };
@@ -49,7 +49,7 @@ function handleResponse(response: Response) {
       }
       return data;
     } catch {
-      console.log('뭐가 문제야!!');
+      return Promise.reject('JSON 파싱 오류');
     }
   });
 }

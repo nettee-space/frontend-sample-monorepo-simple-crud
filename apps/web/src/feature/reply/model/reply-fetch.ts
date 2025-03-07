@@ -21,7 +21,9 @@ export function useReplyFetch(postId: string, parentCommentId: string) {
       setHasMore(response.hasMore);
       setNextCursor(response.nextCursor);
     } catch (error) {
-      throw new Error(error as string);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     } finally {
       setIsLoading(false);
     }

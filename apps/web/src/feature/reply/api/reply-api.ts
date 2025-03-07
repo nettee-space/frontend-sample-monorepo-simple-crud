@@ -6,7 +6,7 @@ import {
   UpdateReplyDTO,
 } from '../types/Reply';
 
-export const getReply = async (
+export const getReply = (
   postId: string,
   commentId: string,
   cursor?: string,
@@ -21,18 +21,18 @@ export const getReply = async (
   );
 };
 
-export const createReply = async (
+export const createReply = (
   postId: string,
   commentId: string,
   content: CreateReplyDTO
-): Promise<void> => {
+): Promise<CreateReplyDTO> => {
   return fetchWrapper.post(
     `/posts/${postId}/comments/${commentId}/replies`,
     content
   );
 };
 
-export const deleteReply = async (
+export const deleteReply = (
   postId: string,
   commentId: string,
   replyId: string
@@ -42,12 +42,12 @@ export const deleteReply = async (
   );
 };
 
-export const updateReply = async (
+export const updateReply = (
   postId: string,
   commentId: string,
   replyId: string,
   content: UpdateReplyDTO
-): Promise<void> => {
+): Promise<UpdateReplyDTO> => {
   return fetchWrapper.put(
     `/posts/${postId}/comments/${commentId}/replies/${replyId}`,
     content

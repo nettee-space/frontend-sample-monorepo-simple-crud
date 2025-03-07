@@ -2,7 +2,7 @@
 import { useSearchParams } from 'next/navigation';
 
 import { Comment } from '@/src/feature/comment/ui/comment';
-import { useReplyFetch } from '@/src/feature/reply/api/reply-fetch';
+import { useReplyFetch } from '@/src/feature/reply/model/reply-fetch';
 
 export function ReplyList() {
   const searchParams = useSearchParams();
