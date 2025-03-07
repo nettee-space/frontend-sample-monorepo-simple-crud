@@ -1,8 +1,8 @@
 'use clients';
 import { useCallback, useState } from 'react';
 
+import type { ReplyType } from '@/src/entity/reply/model/Reply';
 import { getReply } from '@/src/feature/reply/api/reply-api';
-import type { ReplyType } from '@/src/feature/reply/types/Reply';
 import { useInfiniteScroll } from '@/src/shared/lib';
 
 export function useReplyFetch(postId: string, parentCommentId: string) {
