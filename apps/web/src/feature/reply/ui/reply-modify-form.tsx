@@ -2,7 +2,7 @@
 import { Button } from '@workspace/ui/components/button';
 import { useActionState, useTransition } from 'react';
 
-import { replymodify } from '@/src/feature/reply/api/reply-modify';
+import { replymodify } from '@/src/feature/reply/model/reply-modify';
 
 export function ReplyModifyForm({
   id,

@@ -1,6 +1,6 @@
 'use server';
 
-import { updateReply } from './reply-api';
+import { updateReply } from '../api/reply-api';
 
 type State = {
   message?: string | null;
