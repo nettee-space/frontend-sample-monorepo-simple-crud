@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export function useInfiniteScroll<T extends HTMLDivElement>(
+export function useInfiniteScroll<T extends HTMLElement = HTMLDivElement>(
   fetchData: () => Promise<void>,
   {
     threshold,
