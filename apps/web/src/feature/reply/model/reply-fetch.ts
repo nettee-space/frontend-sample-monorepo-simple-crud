@@ -1,8 +1,8 @@
 'use clients';
 import { useCallback, useState } from 'react';
 
+import type { ReplyType } from '@/src/entity/reply/model/reply-type';
 import { getReply } from '@/src/feature/reply/api/reply-api';
-import type { ReplyType } from '@/src/feature/reply/types/reply-type';
 import { useInfiniteScroll } from '@/src/shared/lib/useInfiniteScroll';
 
 export function useReplyFetch() {
