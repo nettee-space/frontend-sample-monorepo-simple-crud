@@ -63,7 +63,7 @@ export async function GET(
     const { searchParams } = new URL(request.url);
 
     const page = Number(searchParams.get('page')) || 1;
-    const limit = Number(searchParams.get('limit')) || 10;
+    const limit = Number(searchParams.get('limit')) || 50;
 
     if (!id) {
       return NextResponse.json(
