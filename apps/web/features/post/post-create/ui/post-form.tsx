@@ -2,44 +2,37 @@
 
 import { Button } from '@workspace/ui/components/button';
 import { useRouter } from 'next/navigation';
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState } from 'react';
 
 import { createPostAction } from '@/features/post/actions';
+import { TextField } from '@/shared/ui';
 
 export function PostForm() {
   const router = useRouter();
-  const [state, formAction, isPending] = useActionState(createPostAction, null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (state?.status) {
-      router.push(`/posts/${state.postId}`);
-    } else if (state?.error) {
-      alert(state.error);
-      setIsSubmitted(false);
-    }
-  }, [state, router]);
-
-  const handleSubmit = (_: React.FormEvent<HTMLFormElement>) => {
-    setIsSubmitted(true);
-  };
+  const [actionResult, formAction, isPending] = useActionState(
+    createPostAction,
+    null
+  );
 
   return (
-    <form action={formAction} onSubmit={handleSubmit}>
-      <h1>새 게시글 작성</h1>
-      <div>
-        <label>제목</label>
-        <input disabled={isPending || isSubmitted} name="title" required />
-      </div>
-      <div>
-        <label>내용</label>
-        <textarea disabled={isPending || isSubmitted} name="content" required />
-      </div>
-      <div>
-        <label>작성자</label>
-        <input disabled={isPending || isSubmitted} name="author" required />
-      </div>
-      <Button type="submit" disabled={isPending || isSubmitted}>
+    <form action={formAction}>
+      <h1 className="mb-4 text-xl font-bold">새 게시글 작성</h1>
+      <TextField name="title" label="제목" required disabled={isPending} />
+      <TextField
+        name="content"
+        label="내용"
+        required
+        disabled={isPending}
+        isTextArea
+      />
+      <TextField name="author" label="작성자" required disabled={isPending} />
+      {actionResult?.status === false && (
+        <p className="mt-2 text-sm text-red-500">{actionResult.error}</p>
+      )}
+      <Button type="button" variant="outline" onClick={() => router.back()}>
+        취소
+      </Button>
+      <Button type="submit" disabled={isPending}>
         {isPending ? '저장 중...' : '작성하기'}
       </Button>
     </form>
