@@ -4,8 +4,8 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { getPostById } from '@/entities/post';
+import { Post } from '@/entities/post';
 import { formatToLocaleDate } from '@/shared/lib';
-import { Post } from '@/shared/types';
 
 // 특정 게시글 페이지 - 게시글 생성 후 넘어가지는지 확인용으로 만든 임시 컴포넌트
 export function PostDetail() {
