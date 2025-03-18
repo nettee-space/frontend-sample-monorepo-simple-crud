@@ -1,1 +1,1 @@
-export * from './postActions';
+export { createPostAction } from './post-actions';

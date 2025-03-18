@@ -1,1 +1,1 @@
-export * from './ui/post-detail';
+export { PostDetail } from './ui/post-detail';

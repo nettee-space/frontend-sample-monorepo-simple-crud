@@ -1,1 +1,1 @@
-export * from './ui/post-form';
+export { PostForm } from './ui/post-form';

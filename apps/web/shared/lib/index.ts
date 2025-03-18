@@ -1,1 +1,1 @@
-export * from './format-date';
+export { formatToLocaleDate } from './format-date';
