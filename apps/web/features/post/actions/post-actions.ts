@@ -3,8 +3,12 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { createPost, ERROR_MESSAGES, validateFormField } from '@/entities/post';
-import { CreatePostDTO } from '@/entities/post';
+import {
+  createPost,
+  CreatePostDTO,
+  ERROR_MESSAGES,
+  validateFormField,
+} from '@/entities/post';
 
 export async function createPostAction(_: unknown, formData: FormData) {
   let postId: string | null = null;

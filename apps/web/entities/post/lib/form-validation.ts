@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from '@/entities/post/lib/error-messages';
+import { ERROR_MESSAGES } from '@/entities/post/';
 
 export const validateFormField = (
   value: FormDataEntryValue | null,
