@@ -13,7 +13,7 @@ export function PostItem({
         <h3 className="pb-4 font-semibold">{title}</h3>
         <hr />
         <p className="pt-4">{content}</p>
-        <br></br>
+        <br />
         <div className="flex flex-col gap-2">
           <span className="rounded border border-gray-300 bg-gray-300 px-2 py-0.5 italic">
             {author}
