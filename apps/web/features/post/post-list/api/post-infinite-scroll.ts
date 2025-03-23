@@ -1,5 +1,5 @@
-import { httpClient } from '@/shared/api/http-client';
-import { GetPostsCursor } from '@/shared/types/post-types';
+import { GetPostsCursor } from '@/entities/post';
+import { httpClient } from '@/shared/api';
 
 export async function getInfiniteScrollData(
   cursor?: string,

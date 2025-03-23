@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { mapPostToViewModel } from '@/entities/post/model/post-view-model';
-import { getInfiniteScrollData } from '@/features/post/post-list/api/post-infinite-scroll';
-import { PostItem } from '@/features/post/post-list/ui/post-item';
-import { Post } from '@/shared/types/post-types';
+import { mapPostToViewModel } from '@/entities/post';
+import { Post } from '@/entities/post';
+import { getInfiniteScrollData } from '@/features/post/post-list';
+import { PostItem } from '@/features/post/post-list';
 
 type PostInfiniteScrollProps = {
   postList: Post[];

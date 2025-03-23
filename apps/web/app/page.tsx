@@ -1,8 +1,8 @@
 import { Button } from '@workspace/ui/components/button';
 import Link from 'next/link';
 
-import { getInfiniteScrollData } from '@/features/post/post-list/api/post-infinite-scroll';
-import { PostInfiniteScroll } from '@/features/post/post-list/ui/post-infinite-scroll';
+import { getInfiniteScrollData } from '@/features/post/post-list';
+import { PostInfiniteScroll } from '@/features/post/post-list';
 
 export default async function Home() {
   const { data, nextCursor, hasMore } = await getInfiniteScrollData('', 10);
