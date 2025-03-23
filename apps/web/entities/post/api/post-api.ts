@@ -1,5 +1,5 @@
-import { httpClient } from '@/shared/api/http-client';
-import { CreatePostDTO, Post, UpdatePostDTO } from '@/shared/types/post-types';
+import type { CreatePostDTO, Post, UpdatePostDTO } from '@/entities/post';
+import { httpClient } from '@/shared/api';
 
 // 게시글 생성 (POST /posts)
 export const createPost = async (postData: CreatePostDTO): Promise<Post> => {

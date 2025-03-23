@@ -8,6 +8,7 @@ const config = {
     'components/**/*.{ts,tsx}',
     '../../packages/ui/src/components/**/*.{ts,tsx}',
     'features/**/*.{ts,tsx}',
+    'shared/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
