@@ -7,6 +7,8 @@ import {
   createPost,
   CreatePostDTO,
   ERROR_MESSAGES,
+  updatePost,
+  UpdatePostDTO,
   validateFormField,
 } from '@/entities/post';
 
@@ -41,4 +43,38 @@ export async function createPostAction(_: unknown, formData: FormData) {
     status: false,
     error: '처리 중 예상치 못한 문제가 발생했습니다.',
   };
+}
+export async function updatePostAction(_: unknown, formData: FormData) {
+  const postId = formData.get('postId') as string;
+  if (!postId) {
+    return { status: false, error: ERROR_MESSAGES.INVALID_ID };
+  }
+
+  try {
+    const updatedData: UpdatePostDTO = {
+      title: formData.get('title')
+        ? validateFormField(formData.get('title'), 'title')
+        : undefined,
+      content: formData.get('content')
+        ? validateFormField(formData.get('content'), 'content')
+        : undefined,
+      author: formData.get('author')
+        ? validateFormField(formData.get('author'), 'author')
+        : undefined,
+    };
+
+    await updatePost(postId, updatedData);
+
+    revalidatePath('/');
+  } catch (error) {
+    return {
+      status: false,
+      error:
+        error instanceof Error
+          ? `${ERROR_MESSAGES.UPDATE_FAILED} ${error.message}`
+          : `${ERROR_MESSAGES.UPDATE_FAILED} 알 수 없는 오류`,
+    };
+  }
+
+  redirect(`/posts/${postId}`);
 }
