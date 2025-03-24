@@ -8,7 +8,7 @@ export default async function Home() {
   const { data, nextCursor, hasMore } = await getInfiniteScrollData('', 10);
 
   return (
-    <>
+    <main className="mx-auto max-w-4xl p-6">
       <Button
         divClassName="text-right mr-8"
         buttonClassName="bg-black text-white font-semibold text-base p-2 rounded"
@@ -21,6 +21,6 @@ export default async function Home() {
         lastPostId={nextCursor}
         hasMore={hasMore}
       />
-    </>
+    </main>
   );
 }

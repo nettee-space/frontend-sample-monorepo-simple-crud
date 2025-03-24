@@ -1,8 +1,8 @@
-import { PostForm } from '@/features/post/post-create';
+import { PostForm } from '@/features/post/post-editor';
 
 export default function NewPostPage() {
   return (
-    <main>
+    <main className="mx-auto max-w-2xl p-6">
       <PostForm />
     </main>
   );
