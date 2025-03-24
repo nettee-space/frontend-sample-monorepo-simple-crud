@@ -4,32 +4,65 @@ import { Button } from '@workspace/ui/components/button';
 import { useRouter } from 'next/navigation';
 import { useActionState } from 'react';
 
-import { createPostAction } from '@/features/post/actions';
+import { Post } from '@/entities/post';
+import { createPostAction, updatePostAction } from '@/features/post/actions';
 import { TextField } from '@/shared/ui';
 
-export function PostForm() {
+interface PostFormProps {
+  post?: Post;
+}
+
+export function PostForm({ post }: PostFormProps) {
   const router = useRouter();
+  const isEditMode = Boolean(post);
+
   const [actionResult, formAction, isPending] = useActionState(
-    createPostAction,
+    isEditMode ? updatePostAction : createPostAction,
     null
   );
 
   return (
     <form action={formAction}>
-      <h1 className="mb-4 text-xl font-bold">새 게시글 작성</h1>
-      <TextField name="title" label="제목" required disabled={isPending} />
+      <h1 className="mb-4 text-xl font-bold">
+        {isEditMode ? '게시글 수정' : '새 게시글 작성'}
+      </h1>
+
+      {post?.id && <input type="hidden" name="postId" value={post.id} />}
+
+      <TextField
+        name="title"
+        label="제목"
+        required
+        disabled={isPending}
+        defaultValue={post?.title || ''}
+      />
       <TextField
         name="content"
         label="내용"
         required
         disabled={isPending}
         isTextArea
+        defaultValue={post?.content || ''}
       />
-      <TextField name="author" label="작성자" required disabled={isPending} />
+      <TextField
+        name="author"
+        label="작성자"
+        required
+        disabled={isPending}
+        readOnly={!!post}
+        defaultValue={post?.author || ''}
+      />
+
       {actionResult?.status === false && (
         <p className="mt-2 text-sm text-red-500">{actionResult.error}</p>
       )}
-      <Button type="button" variant="outline" onClick={() => router.back()}>
+
+      <Button
+        type="button"
+        variant="outline"
+        onClick={() => router.back()}
+        disabled={isPending}
+      >
         취소
       </Button>
       <Button type="submit" disabled={isPending}>
