@@ -14,7 +14,11 @@ export async function replyAdd(prevState: State, queryData: FormData) {
   if (!content) {
     return { message: '모든 빈 칸을 입력해주세요' };
   }
-
-  await createReply(postId, commentId, { content, author });
-  return { message: '댓글 작성 완료' };
+  try {
+    await createReply(postId, commentId, { content, author });
+    return { message: '댓글 작성 완료' };
+  } catch (error) {
+    console.log(error);
+    return { message: '댓글 작성 실패' };
+  }
 }
