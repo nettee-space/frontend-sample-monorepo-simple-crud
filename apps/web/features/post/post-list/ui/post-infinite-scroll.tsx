@@ -1,23 +1,23 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { getInfiniteScrollData } from '@/features/post/post-list/api/post-infinite-scroll';
-import { PostItem } from '@/features/post/post-list/ui/post-item';
-import { formatToLocaleDate } from '@/shared/lib/format-date';
-import { Post } from '@/shared/types/post-types';
+import { mapPostToViewModel } from '@/entities/post';
+import { Post } from '@/entities/post';
+import { getInfiniteScrollData } from '@/features/post/post-list';
+import { PostItem } from '@/features/post/post-list';
 
-type InfiniteScrollProps = {
+type PostInfiniteScrollProps = {
   postList: Post[];
   lastPostId: string | null;
   hasMore: boolean;
 };
 
-export function InfiniteScroll({
+export function PostInfiniteScroll({
   postList,
   lastPostId,
   hasMore,
-}: InfiniteScrollProps) {
+}: PostInfiniteScrollProps) {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState<Post[]>(postList);
   const [cursor, setCursor] = useState(lastPostId ? lastPostId : null);
@@ -55,24 +55,26 @@ export function InfiniteScroll({
     };
   }, [loadMorePosts]);
 
+  const postViewModels = useMemo(
+    () => posts.map((post) => mapPostToViewModel(post)),
+    [posts]
+  );
+
   return (
     <div>
-      {posts.map(({ id, title, content, author, createdAt }) => {
-        const localeCreatedAt = formatToLocaleDate(createdAt);
-        return (
-          <PostItem
-            key={id}
-            linkPostId={id}
-            title={title}
-            content={content}
-            author={author}
-            localeCreatedAt={localeCreatedAt}
-          />
-        );
-      })}
+      {postViewModels.map((postViewModel) => (
+        <PostItem
+          key={postViewModel.id}
+          linkPostId={postViewModel.id}
+          title={postViewModel.title}
+          content={postViewModel.content}
+          author={postViewModel.author}
+          localeCreatedAt={postViewModel.localeCreatedAt}
+        />
+      ))}
       <h3
         ref={target}
-        className="mx-8 mb-4 mt-8 text-center text-9xl font-semibold"
+        className="mx-8 mb-4 mt-8 text-center text-2xl font-semibold"
       >
         {posts.at(-1)?.id === cursor
           ? '*************더 많은 게시글 로딩 중****************'
