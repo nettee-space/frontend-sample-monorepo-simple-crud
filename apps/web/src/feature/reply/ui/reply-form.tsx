@@ -3,7 +3,7 @@ import { Button } from '@workspace/ui/components/button';
 import { useSearchParams } from 'next/navigation';
 import { useActionState } from 'react';
 
-import { replyAdd } from '@/src/feature/reply/api/reply-add';
+import { replyAdd } from '@/src/feature/reply/model/reply-add';
 
 export function ReplyForm() {
   const [state, dispatch] = useActionState(replyAdd, { message: '' }, '/');

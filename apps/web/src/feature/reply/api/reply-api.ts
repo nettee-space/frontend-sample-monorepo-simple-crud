@@ -1,10 +1,9 @@
-import { fetchWrapper } from '@/src/shared/api';
-
 import {
   CreateReplyDTO,
   ReplyCursorPaginationResponse,
   UpdateReplyDTO,
-} from '../types/reply-type';
+} from '@/src/entity/reply/model/Reply';
+import { fetchWrapper } from '@/src/shared/api';
 
 export const getReply = (
   postId: string,
