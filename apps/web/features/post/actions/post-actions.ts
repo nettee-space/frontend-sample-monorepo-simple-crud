@@ -7,6 +7,7 @@ import {
   createPost,
   CreatePostDTO,
   ERROR_MESSAGES,
+  getValidatedField,
   updatePost,
   UpdatePostDTO,
   validateFormField,
@@ -51,15 +52,14 @@ export async function updatePostAction(_: unknown, formData: FormData) {
   }
 
   try {
-    const fields: (keyof UpdatePostDTO)[] = ['title', 'content', 'author'];
-
-    const getValidatedField = <K extends keyof UpdatePostDTO>(field: K) => {
-      const value = formData.get(field);
-      return value ? validateFormField(value, field) : undefined;
-    };
+    const fields = [
+      'title',
+      'content',
+      'author',
+    ] as const satisfies readonly (keyof UpdatePostDTO)[];
 
     const validatedData = fields.reduce((acc, field) => {
-      const validatedValue = getValidatedField(field);
+      const validatedValue = getValidatedField(formData, field);
       if (validatedValue !== undefined) acc[field] = validatedValue;
       return acc;
     }, {} as UpdatePostDTO);

@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from '@/entities/post/';
+import { ERROR_MESSAGES, UpdatePostDTO } from '@/entities/post/';
 
 export const validateFormField = (
   value: FormDataEntryValue | null,
@@ -15,4 +15,12 @@ export const validateFormField = (
   }
 
   return value;
+};
+
+export const getValidatedField = <K extends keyof UpdatePostDTO>(
+  formData: FormData,
+  field: K
+) => {
+  const value = formData.get(field);
+  return value ? validateFormField(value, field) : undefined;
 };
