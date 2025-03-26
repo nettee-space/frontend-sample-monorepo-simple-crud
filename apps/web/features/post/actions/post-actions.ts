@@ -51,19 +51,21 @@ export async function updatePostAction(_: unknown, formData: FormData) {
   }
 
   try {
-    const updatedData: UpdatePostDTO = {
-      title: formData.get('title')
-        ? validateFormField(formData.get('title'), 'title')
-        : undefined,
-      content: formData.get('content')
-        ? validateFormField(formData.get('content'), 'content')
-        : undefined,
-      author: formData.get('author')
-        ? validateFormField(formData.get('author'), 'author')
-        : undefined,
-    };
+    const rawTitle = formData.get('title');
+    const rawContent = formData.get('content');
+    const rawAuthor = formData.get('author');
 
-    await updatePost(postId, updatedData);
+    const title = rawTitle ? validateFormField(rawTitle, 'title') : undefined;
+    const content = rawContent
+      ? validateFormField(rawContent, 'content')
+      : undefined;
+    const author = rawAuthor
+      ? validateFormField(rawAuthor, 'author')
+      : undefined;
+
+    const validatedData: UpdatePostDTO = { title, content, author };
+
+    await updatePost(postId, validatedData);
 
     revalidatePath('/');
   } catch (error) {
