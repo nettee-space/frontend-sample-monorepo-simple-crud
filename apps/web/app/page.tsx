@@ -1,1 +1,5 @@
-export { HomePage as default } from '@/src/app/main';
+import { CommentList } from '@/src/features/comment/ui/commenet-list';
+
+export default function Page() {
+  return <CommentList />;
+}

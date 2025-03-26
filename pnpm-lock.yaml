@@ -78,6 +78,9 @@ importers:
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      autoprefixer:
+        specifier: ^10.4.20
+        version: 10.4.20(postcss@8.4.49)
       lucide-react:
         specifier: 0.456.0
         version: 0.456.0(react@19.0.0)
