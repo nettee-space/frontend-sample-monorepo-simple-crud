@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 import { profile } from '@/src/shared/assets';
 import { formatTimeAgo } from '@/src/shared/lib';
+
 export function Comment({
   author,
   content,
@@ -27,8 +28,8 @@ export function Comment({
         </div>
         <p className="text-gray-700">{content}</p>
         <div className="flex space-x-2">
-          {/* <OutLineButton text={'수정'} action={}/>
-                    <OutLineButton text={'삭제'} action={}/> */}
+          {/* <OutLineButton text={'수정'} action={}/> */}
+          {/* <OutLineButton text={'삭제'} action={}/> */}
         </div>
       </div>
     </div>
