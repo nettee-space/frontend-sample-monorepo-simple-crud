@@ -10,6 +10,5 @@ export async function responseComments(
     }
   );
   const data = await response.json();
-  console.log('test', data);
   return data;
 }
