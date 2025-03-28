@@ -1,15 +1,11 @@
-'use client';
+'use clients';
 import { useCallback, useState } from 'react';
 
-import { ReplyType } from '@/src/entity/reply/model/Reply';
 import { getReply } from '@/src/feature/reply/api/reply-api';
+import type { ReplyType } from '@/src/feature/reply/types/reply-type';
+import { useInfiniteScroll } from '@/src/shared/lib/useInfiniteScroll';
 
-interface ReplyProps {
-  postId: string;
-  commentId: string;
-}
-
-export function useReplyFetch({ postId, commentId }: ReplyProps) {
+export function useReplyFetch() {
   const [data, setData] = useState<ReplyType[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [nextCursor, setNextCursor] = useState<string | undefined>(undefined);
@@ -20,16 +16,23 @@ export function useReplyFetch({ postId, commentId }: ReplyProps) {
 
     setIsLoading(true);
     try {
-      const response = await getReply(postId, commentId, nextCursor, 10);
+      const response = await getReply(
+        '17358013402371',
+        '1738039148628',
+        nextCursor,
+        10
+      );
       setData((prev) => [...prev, ...response.data]);
       setHasMore(response.hasMore);
       setNextCursor(response.nextCursor);
     } catch (error) {
-      console.error('댓글을 불러오는 중 오류 발생:', error);
+      throw new Error(error as string);
     } finally {
       setIsLoading(false);
     }
-  }, [postId, commentId, hasMore, isLoading, nextCursor]);
+  }, [nextCursor, hasMore, isLoading]);
 
-  return { data, fetchReplies, hasMore, isLoading };
+  const { targetRef } = useInfiniteScroll(fetchReplies, { threshold: 1 });
+
+  return { data, targetRef, isLoading };
 }
