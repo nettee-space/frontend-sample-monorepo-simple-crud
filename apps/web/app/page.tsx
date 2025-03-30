@@ -8,8 +8,8 @@ export default async function Home() {
   const { data, nextCursor, hasMore } = await getInfiniteScrollData('', 10);
 
   return (
-    <>
-      <Button asChild>
+    <div>
+      <Button asChild className="mx-8">
         <Link href="/posts/write">새 글 작성</Link>
       </Button>
 
@@ -18,6 +18,6 @@ export default async function Home() {
         lastPostId={nextCursor}
         hasMore={hasMore}
       />
-    </>
+    </div>
   );
 }
