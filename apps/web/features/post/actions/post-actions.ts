@@ -7,23 +7,25 @@ import {
   createPost,
   CreatePostDTO,
   ERROR_MESSAGES,
-  getValidatedField,
+  extractFormData,
+  getValidatedFields,
   updatePost,
   UpdatePostDTO,
-  validateFormField,
 } from '@/entities/post';
 
+// 게시글 작성 서버 액션
 export async function createPostAction(_: unknown, formData: FormData) {
   let postId: string | null = null;
 
   try {
-    const title = validateFormField(formData.get('title'), 'title');
-    const content = validateFormField(formData.get('content'), 'content');
-    const author = validateFormField(formData.get('author'), 'author');
+    const rawData = extractFormData<CreatePostDTO>(formData, [
+      'title',
+      'content',
+      'author',
+    ]);
+    const validatedData: CreatePostDTO = getValidatedFields(rawData);
 
-    const postData: CreatePostDTO = { title, content, author };
-
-    postId = (await createPost(postData)).id;
+    postId = (await createPost(validatedData)).id;
 
     revalidatePath('/');
   } catch (error) {
@@ -35,16 +37,10 @@ export async function createPostAction(_: unknown, formData: FormData) {
           : `${ERROR_MESSAGES.SAVE_FAILED} 알 수 없는 오류`,
     };
   }
-
-  if (postId) {
-    redirect(`/posts/${postId}`);
-  }
-
-  return {
-    status: false,
-    error: '처리 중 예상치 못한 문제가 발생했습니다.',
-  };
+  redirect(`/posts/${postId}`);
 }
+
+// 게시글 수정 서버 액션
 export async function updatePostAction(_: unknown, formData: FormData) {
   const postId = formData.get('postId') as string;
   if (!postId) {
@@ -52,17 +48,12 @@ export async function updatePostAction(_: unknown, formData: FormData) {
   }
 
   try {
-    const fields = [
+    const rawData = extractFormData<UpdatePostDTO>(formData, [
       'title',
       'content',
       'author',
-    ] as const satisfies readonly (keyof UpdatePostDTO)[];
-
-    const validatedData = fields.reduce((acc, field) => {
-      const validatedValue = getValidatedField(formData, field);
-      if (validatedValue !== undefined) acc[field] = validatedValue;
-      return acc;
-    }, {} as UpdatePostDTO);
+    ]);
+    const validatedData: UpdatePostDTO = getValidatedFields(rawData);
 
     await updatePost(postId, validatedData);
 
@@ -76,6 +67,5 @@ export async function updatePostAction(_: unknown, formData: FormData) {
           : `${ERROR_MESSAGES.UPDATE_FAILED} 알 수 없는 오류`,
     };
   }
-
   redirect(`/posts/${postId}`);
 }
