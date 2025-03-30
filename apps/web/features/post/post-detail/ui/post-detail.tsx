@@ -23,10 +23,10 @@ export async function PostDetail({ params }: PostDetailProps) {
   if (!post) return <p>게시글을 찾을 수 없습니다.</p>;
 
   return (
-    <div key={id} className="mx-8 my-4 rounded border border-gray-400 p-4">
+    <div className="mx-8 my-4 rounded border border-gray-400 p-4">
       <h3 className="pb-4 font-semibold">{post.title}</h3>
       <hr />
-      <p className="pt-4">{post.content}</p>
+      <p className="min-h-[30vh] whitespace-pre-wrap pt-4">{post.content}</p>
       <br />
       <div className="flex flex-col gap-2">
         <span className="rounded border border-gray-300 bg-gray-300 px-2 py-0.5 italic">

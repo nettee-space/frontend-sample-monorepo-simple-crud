@@ -22,8 +22,8 @@ export function PostForm({ post }: PostFormProps) {
   );
 
   return (
-    <form action={formAction}>
-      <h1 className="mb-4 text-xl font-bold">
+    <form action={formAction} className="mx-8 flex flex-col">
+      <h1 className="mb-4 text-center text-xl font-bold">
         {isEditMode ? '게시글 수정' : '새 게시글 작성'}
       </h1>
 
@@ -43,6 +43,7 @@ export function PostForm({ post }: PostFormProps) {
         disabled={isPending}
         isTextArea
         defaultValue={post?.content || ''}
+        className="min-h-[30vh]"
       />
       <TextField
         name="author"
@@ -57,17 +58,19 @@ export function PostForm({ post }: PostFormProps) {
         <p className="mt-2 text-sm text-red-500">{actionResult.error}</p>
       )}
 
-      <Button
-        type="button"
-        variant="outline"
-        onClick={() => router.back()}
-        disabled={isPending}
-      >
-        취소
-      </Button>
-      <Button type="submit" disabled={isPending}>
-        {isPending ? '저장 중...' : '작성하기'}
-      </Button>
+      <div className="flex justify-end gap-2">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => router.back()}
+          disabled={isPending}
+        >
+          취소
+        </Button>
+        <Button type="submit" disabled={isPending}>
+          {isPending ? '저장 중...' : '작성하기'}
+        </Button>
+      </div>
     </form>
   );
 }
