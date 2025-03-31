@@ -9,9 +9,16 @@ export default async function Home() {
 
   return (
     <>
-      <Button asChild>
-        <Link href="/posts/write">새 글 작성</Link>
-      </Button>
+      <div className="flex flex-col">
+        <h1 className="mx-8 my-4 text-center text-2xl font-bold">
+          게시글 목록
+        </h1>
+        <div className="flex justify-end">
+          <Button asChild className="mx-8">
+            <Link href="/posts/write">새 글 작성</Link>
+          </Button>
+        </div>
+      </div>
 
       <PostInfiniteScroll
         postList={data}
