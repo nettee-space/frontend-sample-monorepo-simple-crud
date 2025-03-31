@@ -15,9 +15,5 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
     notFound();
   }
 
-  return (
-    <main className="mx-auto max-w-2xl p-6">
-      <PostForm post={post} />
-    </main>
-  );
+  return <PostForm post={post} />;
 }

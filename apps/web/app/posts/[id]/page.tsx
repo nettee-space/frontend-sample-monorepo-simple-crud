@@ -1,10 +1,24 @@
+import { Button } from '@workspace/ui/components/button';
+import Link from 'next/link';
+
 import { PostDetail } from '@/features/post/post-detail';
 
-// 특정 게시글 페이지 - 게시글 생성 후 넘어가지는지 확인용으로 만든 임시 페이지
-export default function PostPage() {
+export default async function PostPage({ params }: { params: { id: string } }) {
+  const id = (await params).id;
+
   return (
-    <main>
-      <PostDetail />
-    </main>
+    <>
+      <PostDetail params={params} />
+      <div className="flex flex-col items-end">
+        <div className="mx-8 flex gap-2">
+          <Button asChild>
+            <Link href={'/'}>목록</Link>
+          </Button>
+          <Button asChild>
+            <Link href={`/posts/edit/${id}`}>수정</Link>
+          </Button>
+        </div>
+      </div>
+    </>
   );
 }
