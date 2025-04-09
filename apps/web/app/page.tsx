@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { getInfiniteScrollData } from '@/features/post/post-list';
 import { PostInfiniteScroll } from '@/features/post/post-list';
+import { PostListPagination } from '@/features/post/post-list/ui/post-list-pagination';
 
 export default async function Home() {
   const { data, nextCursor, hasMore } = await getInfiniteScrollData('', 10);
@@ -19,7 +20,7 @@ export default async function Home() {
           </Button>
         </div>
       </div>
-
+      <PostListPagination />
       <PostInfiniteScroll
         postList={data}
         lastPostId={nextCursor}

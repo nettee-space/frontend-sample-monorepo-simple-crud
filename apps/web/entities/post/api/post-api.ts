@@ -1,4 +1,9 @@
-import type { CreatePostDTO, Post, UpdatePostDTO } from '@/entities/post';
+import type {
+  CreatePostDTO,
+  GetPostsOffset,
+  Post,
+  UpdatePostDTO,
+} from '@/entities/post';
 import { httpClient } from '@/shared/api';
 
 // 게시글 생성 (POST /posts)
@@ -37,4 +42,14 @@ export const deletePost = async (
   return httpClient<{ message: string }>(`/posts/${postId}`, {
     method: 'DELETE',
   });
+};
+
+// 오프셋 기반 게시글 목록 조회 (현재 페이지와 전체 페이지 정보 포함)
+export const getPostsByPage = async (
+  page: number = 1,
+  limit: number = 10
+): Promise<GetPostsOffset> => {
+  return httpClient<GetPostsOffset>(
+    `/posts/paginated?page=${page}&limit=${limit}`
+  );
 };
